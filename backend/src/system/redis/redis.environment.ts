@@ -7,6 +7,8 @@ const logger = new Logger('Redis Environment');
 export const redisEnvironmentSchema = z.object({
     REDIS_HOST: z.string().default('localhost'),
     REDIS_PORT: z.coerce.number().default(6379),
+    REDIS_PASSWORD: z.string().optional(),
+    REDIS_USE_TLS: z.coerce.boolean().default(false),
     REDIS_DATABASE: z.coerce.number().default(0),
     REDIS_KEY_PREFIX: z.string().optional(),
     REDIS_CONNECT_TIMEOUT: z.coerce.number().default(10000),

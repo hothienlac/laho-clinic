@@ -1,0 +1,1 @@
+export const __NO_DATABASE_METADATA__ = '__NO_DATABASE_METADATA__';

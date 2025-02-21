@@ -10,34 +10,39 @@ datasource db {
 }
 
 model user {
-  user_id       String   @id(map: "user_pk") @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  email         String   @unique(map: "user_unique") @db.VarChar
-  username      String   @db.VarChar
-  password_hash String   @db.VarChar
-  created_at    DateTime @db.Timestamptz(6)
-  updated_at    DateTime @db.Timestamptz(6)
-  bio           String
-  phone_number  String?  @db.VarChar
+  user_id              String        @id(map: "user_pk") @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  email                String        @unique(map: "user_unique") @db.VarChar
+  fullname             String        @db.VarChar
+  password_hash        String        @db.VarChar
+  created_at           DateTime      @default(now()) @db.Timestamptz(6)
+  updated_at           DateTime      @default(now()) @db.Timestamptz(6)
+  user_security_secret String        @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  phone_number         String?       @db.VarChar
+  nickname             String        @db.VarChar
+  tenant_user          tenant_user[]
 
   @@schema("authentication")
 }
 
 model tenant {
-  tenant_id    String  @id(map: "tenant_pk") @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  tenant_name  String  @unique(map: "tenant_unique") @db.VarChar
-  address      String? @db.VarChar
-  phone_number String? @db.VarChar
-  description  String  @db.VarChar
+  tenant_id    String        @id(map: "tenant_pk") @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  tenant_name  String        @unique(map: "tenant_unique") @db.VarChar
+  address      String?       @db.VarChar
+  phone_number String?       @db.VarChar
+  description  String        @db.VarChar
+  tenant_user  tenant_user[]
 
   @@schema("tenant")
 }
 
 model tenant_user {
-  tenant_user_id String      @id(map: "tenant_user_pk") @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  tenant_id      String      @db.Uuid
-  user_id        String      @db.Uuid
-  role           tenant_role
-  created_at     DateTime    @db.Timestamptz(6)
+  tenant_user_id String   @id(map: "tenant_user_pk") @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  tenant_id      String   @db.Uuid
+  user_id        String   @db.Uuid
+  role           String   @db.VarChar
+  created_at     DateTime @db.Timestamptz(6)
+  tenant         tenant   @relation(fields: [tenant_id], references: [tenant_id], onUpdate: Restrict, map: "tenant_user_tenant_fk")
+  user           user     @relation(fields: [user_id], references: [user_id], onUpdate: Restrict, map: "tenant_user_user_fk")
 
   @@unique([tenant_id, user_id], map: "tenant_user_unique")
   @@schema("tenant")

@@ -1,9 +1,15 @@
-import { Global, Module } from '@nestjs/common';
+import { Global, MiddlewareConsumer, Module } from '@nestjs/common';
+import { DatabaseService } from './database.service';
 import { PrismaService } from './prisma.service';
+import { DatabaseMiddleware } from './database.middleware';
 
 @Global()
 @Module({
-    providers: [PrismaService],
-    exports: [PrismaService],
+    providers: [DatabaseService, PrismaService],
+    exports: [DatabaseService],
 })
-export class DatabaseModule {}
+export class DatabaseModule {
+    configure(consumer: MiddlewareConsumer) {
+        consumer.apply(DatabaseMiddleware).forRoutes('*');
+    }
+}

@@ -8,6 +8,10 @@ import { LoggerModule } from './system/logger/logger.module';
 import { AsyncLocalStorageModule } from './system/async-local-storage/async-local-storage.module';
 import { PipeModule } from './system/pipe/pipe.module';
 import { SentryModule } from './system/sentry/sentry.module';
+import { DiscordModule } from './system/discord/discord.module';
+import { HttpModule } from './system/http/http.module';
+import { UserModule } from './clinic/user/user.module';
+import { DatabaseModule } from '@system/database';
 
 @Module({
     imports: [
@@ -17,8 +21,12 @@ import { SentryModule } from './system/sentry/sentry.module';
         BullmqModule,
         LoggerModule,
         AsyncLocalStorageModule,
+        DatabaseModule,
         PipeModule,
         SentryModule,
+        DiscordModule,
+        HttpModule,
+        UserModule,
     ],
     controllers: [AppController],
 })
