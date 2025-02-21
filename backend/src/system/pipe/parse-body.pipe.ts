@@ -8,7 +8,7 @@ export class ParseBodyPipe<T extends ZodType<unknown>> implements PipeTransform 
     transform(value: unknown): TypeOf<T> {
         const parseResult = this.schema.safeParse(value);
         if (!parseResult.success) {
-            throw new BadRequestException(parseResult.error.message);
+            throw new BadRequestException(parseResult.error);
         }
         return parseResult.data;
     }

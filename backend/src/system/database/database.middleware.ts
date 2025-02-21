@@ -1,4 +1,4 @@
-import { Injectable, Logger, NestMiddleware } from '@nestjs/common';
+import { Injectable, InternalServerErrorException, Logger, NestMiddleware } from '@nestjs/common';
 import { ModuleRef } from '@nestjs/core';
 import { NextFunction, Request, Response } from 'express';
 import { DatabaseService } from './database.service';
@@ -19,7 +19,12 @@ export class DatabaseMiddleware implements NestMiddleware {
 
         // Start a transaction
         const tx = prisma.$transaction((prismaTransaction) => {
-            this.databaseService.setTransaction(prismaTransaction);
+            try {
+                this.databaseService.setTransaction(prismaTransaction);
+            } catch (error) {
+                this.logger.error('Failed to set transaction', error);
+                throw new InternalServerErrorException('Failed to set transaction');
+            }
             return new Promise<void>((resolve, reject) => {
                 response.on('finish', () => {
                     try {

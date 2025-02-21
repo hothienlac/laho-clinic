@@ -2,6 +2,7 @@ import { NestFactory } from '@nestjs/core';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { AppModule } from './app.module';
 import { appEnvironment } from './app.environment';
+import { SystemProtectGuard } from './system-protect/system-protect.guard';
 
 async function bootstrap() {
     const app = await NestFactory.create(AppModule);
@@ -13,6 +14,7 @@ async function bootstrap() {
     const documentFactory = () => SwaggerModule.createDocument(app, config);
     SwaggerModule.setup('docs', app, documentFactory);
     app.setGlobalPrefix('api');
+    app.useGlobalGuards(new SystemProtectGuard());
     await app.listen(appEnvironment.PORT);
 }
 void bootstrap();

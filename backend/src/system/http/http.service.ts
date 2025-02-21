@@ -25,7 +25,7 @@ export class HttpService {
     private async request<T extends ZodType<unknown>>(
         method: 'get' | 'post' | 'put' | 'patch' | 'delete',
         options: HttpRequestOptions,
-        schema: T,
+        schema?: T,
     ): Promise<TypeOf<T>> {
         this.logger.log(`[${method.toUpperCase()}] ${options.url}`);
         let response: AxiosResponse;
@@ -40,6 +40,9 @@ export class HttpService {
         } catch (error) {
             this.handleRequestError(error);
         }
+        if (!schema) {
+            return;
+        }
         return this.parseResponse(response!.data, schema);
     }
 
@@ -53,23 +56,23 @@ export class HttpService {
         throw new InternalServerErrorException('One service is not functioning properly, please try again later');
     }
 
-    async get<T extends ZodType<unknown>>(options: HttpRequestOptions, schema: T): Promise<TypeOf<T>> {
+    async get<T extends ZodType<unknown>>(options: HttpRequestOptions, schema?: T): Promise<TypeOf<T>> {
         return this.request('get', options, schema);
     }
 
-    async post<T extends ZodType<unknown>>(options: HttpRequestOptions, schema: T): Promise<TypeOf<T>> {
+    async post<T extends ZodType<unknown>>(options: HttpRequestOptions, schema?: T): Promise<TypeOf<T>> {
         return this.request('post', options, schema);
     }
 
-    async put<T extends ZodType<unknown>>(options: HttpRequestOptions, schema: T): Promise<TypeOf<T>> {
+    async put<T extends ZodType<unknown>>(options: HttpRequestOptions, schema?: T): Promise<TypeOf<T>> {
         return this.request('put', options, schema);
     }
 
-    async patch<T extends ZodType<unknown>>(options: HttpRequestOptions, schema: T): Promise<TypeOf<T>> {
+    async patch<T extends ZodType<unknown>>(options: HttpRequestOptions, schema?: T): Promise<TypeOf<T>> {
         return this.request('patch', options, schema);
     }
 
-    async delete<T extends ZodType<unknown>>(options: HttpRequestOptions, schema: T): Promise<TypeOf<T>> {
+    async delete<T extends ZodType<unknown>>(options: HttpRequestOptions, schema?: T): Promise<TypeOf<T>> {
         return this.request('delete', options, schema);
     }
 }

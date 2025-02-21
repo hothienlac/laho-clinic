@@ -13,11 +13,13 @@ export class DatabaseService {
     ) {}
 
     setTransaction(transaction: Prisma.TransactionClient): void {
+        this.logger.debug('Setting transaction');
         const localStore = this.asyncLocalStorageService.getLocalStore();
         if (!localStore) {
             throw new Error('Local store is not available, the function is not called within a async storage hook.');
         }
         localStore['__database_transaction__'] = transaction;
+        this.logger.debug('Transaction set');
     }
 
     get tx(): Prisma.TransactionClient {

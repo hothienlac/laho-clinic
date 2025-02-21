@@ -1,10 +1,12 @@
 /* eslint-disable @typescript-eslint/no-unsafe-function-type */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
-import { Global, Module, OnModuleInit } from '@nestjs/common';
+import { Global, Logger, Module, OnModuleInit } from '@nestjs/common';
 import { DiscoveryModule, DiscoveryService, MetadataScanner, Reflector } from '@nestjs/core';
 import { Queue, Worker, Job, QueueOptions, ConnectionOptions } from 'bullmq';
 import { bullmqEnvironment } from './bullmq.environment';
 import { __BACKGROUND_JOB_METADATA__, BackgroundJobMetadata } from './bullmq.decorator';
+import { DatabaseService } from '@system/database';
+import { runInAsyncLocalStorage } from '@system/async-local-storage';
 
 export type QueueInfo = {
     queue: Queue;
@@ -16,6 +18,8 @@ export type QueueInfo = {
     imports: [DiscoveryModule],
 })
 export class BullmqModule implements OnModuleInit {
+    private readonly logger = new Logger(BullmqModule.name);
+
     private readonly queues = new Map<string, QueueInfo>();
     private readonly connection: ConnectionOptions = {
         host: bullmqEnvironment.BULLMQ_REDIS_HOST,
@@ -23,7 +27,6 @@ export class BullmqModule implements OnModuleInit {
         db: bullmqEnvironment.BULLMQ_REDIS_DATABASE,
         password: bullmqEnvironment.BULLMQ_REDIS_PASSWORD,
         tls: bullmqEnvironment.BULLMQ_REDIS_USE_TLS ? {} : undefined,
-        keyPrefix: 'bullmq',
     };
     private readonly queueOptions: QueueOptions = {
         connection: this.connection,
@@ -33,6 +36,7 @@ export class BullmqModule implements OnModuleInit {
         private readonly reflector: Reflector,
         private readonly metadataScanner: MetadataScanner,
         private readonly discoveryService: DiscoveryService,
+        private readonly databaseService: DatabaseService,
     ) {}
 
     onModuleInit(): void {
@@ -91,8 +95,24 @@ export class BullmqModule implements OnModuleInit {
         new Worker(
             queueName,
             async (job: Job) => {
-                // eslint-disable-next-line @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
-                await originalMethod(...job.data.args);
+                await runInAsyncLocalStorage({}, async () => {
+                    const prisma = this.databaseService.prisma;
+                    await prisma.$transaction(async (prismaTransaction) => {
+                        try {
+                            this.databaseService.setTransaction(prismaTransaction);
+                        } catch (error) {
+                            this.logger.error(error);
+                            this.logger.error('Error setting transaction');
+                        }
+                        try {
+                            // eslint-disable-next-line @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
+                            await originalMethod(...job.data.args);
+                        } catch (error) {
+                            this.logger.error(error);
+                            this.logger.error('Error executing the job');
+                        }
+                    });
+                });
             },
             {
                 connection: this.connection,
