@@ -1,7 +1,6 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AuthenticationModule } from '@clinic/authentication/authentication.module';
-import { TenantModule } from '@clinic/tenant/tenant.module';
 import { RedisModule } from './system/redis/redis.module';
 import { BullmqModule } from './system/bullmq/bullmq.module';
 import { LoggerModule } from './system/logger/logger.module';
@@ -16,7 +15,6 @@ import { DatabaseModule } from '@system/database';
 @Module({
     imports: [
         AuthenticationModule,
-        TenantModule,
         RedisModule,
         BullmqModule,
         LoggerModule,
