@@ -1,19 +1,22 @@
-'use client';
+"use client"
 
-import { useEffect } from 'react';
-import { Button } from '@/components/ui/button';
+import { useEffect } from "react"
+import { Button } from "@/components/ui/button"
+import { useTranslations } from "next-intl"
 
 export default function Error({
   error,
   reset,
 }: {
-  error: Error & { digest?: string };
-  reset: () => void;
+  error: Error & { digest?: string }
+  reset: () => void
 }) {
+  const t = useTranslations("errors")
+
   useEffect(() => {
     // Log the error to an error reporting service
-    console.error(error);
-  }, [error]);
+    console.error(error)
+  }, [error])
 
   return (
     <div className="flex min-h-screen flex-col items-center justify-center p-4">
@@ -36,15 +39,13 @@ export default function Error({
             <line x1="12" y1="16" x2="12.01" y2="16" />
           </svg>
         </div>
-        <h2 className="text-2xl font-bold mb-2">Something went wrong!</h2>
-        <p className="text-muted-foreground mb-6">
-          We apologize for the inconvenience. Please try again or contact
-          support if the problem persists.
-        </p>
+        <h2 className="text-2xl font-bold mb-2">{t("somethingWentWrong")}</h2>
+        <p className="text-muted-foreground mb-6">{t("errorMessage")}</p>
         <Button onClick={reset} className="w-full">
-          Try again
+          {t("tryAgain")}
         </Button>
       </div>
     </div>
-  );
+  )
 }
+

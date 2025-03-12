@@ -1,0 +1,30 @@
+{
+  "welcome": "Chào mừng trở lại, {name}",
+  "overview": "Đây là những gì đang diễn ra tại phòng khám của bạn hôm nay.",
+  "stats": {
+    "totalPatients": "Tổng Số Bệnh Nhân",
+    "appointmentsToday": "Lịch Hẹn Hôm Nay",
+    "inventoryItems": "Kho Thuốc",
+    "activity": "Hoạt Động",
+    "remaining": "còn {count}",
+    "lowStock": "cảnh báo hàng sắp hết",
+    "fromLastMonth": "so với tháng trước",
+    "fromYesterday": "so với hôm qua"
+  },
+  "recentActivity": {
+    "title": "Hoạt Động Gần Đây",
+    "description": "Hoạt động của phòng khám trong 24 giờ qua",
+    "patientCheckIn": "Bệnh nhân đăng ký khám",
+    "prescriptionFilled": "Đơn thuốc đã cấp",
+    "appointmentScheduled": "Lịch hẹn đã đặt",
+    "inventoryUpdated": "Kho thuốc đã cập nhật",
+    "medicalRecordUpdated": "Hồ sơ y tế đã cập nhật",
+    "timeAgo": "cách đây {count, plural, =1 {# giờ} other {# giờ}}",
+    "viewAll": "Xem Tất Cả Hoạt Động"
+  },
+  "upcomingAppointments": {
+    "title": "Lịch Hẹn Sắp Tới",
+    "description": "3 lịch hẹn tiếp theo",
+    "schedule": "Đặt Lịch Hẹn Mới"
+  }
+}

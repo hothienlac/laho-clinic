@@ -1,4 +1,4 @@
-import { Card, CardContent, CardHeader } from '@/components/ui/card';
+import { Card, CardContent, CardHeader } from "@/components/ui/card"
 
 export default function Loading() {
   return (
@@ -33,10 +33,7 @@ export default function Loading() {
             <CardContent>
               <div className="space-y-4">
                 {[1, 2, 3, 4, 5].map((i) => (
-                  <div
-                    key={i}
-                    className="flex items-center gap-4 rounded-lg border p-3"
-                  >
+                  <div key={i} className="flex items-center gap-4 rounded-lg border p-3">
                     <div className="h-10 w-10 rounded-full bg-muted animate-pulse"></div>
                     <div className="flex-1 space-y-2">
                       <div className="h-4 w-3/4 bg-muted animate-pulse rounded-md"></div>
@@ -57,10 +54,7 @@ export default function Loading() {
           <CardContent>
             <div className="space-y-4">
               {[1, 2, 3].map((i) => (
-                <div
-                  key={i}
-                  className="flex items-center gap-4 rounded-lg border p-3"
-                >
+                <div key={i} className="flex items-center gap-4 rounded-lg border p-3">
                   <div className="h-10 w-10 rounded-full bg-muted animate-pulse"></div>
                   <div className="flex-1 space-y-2">
                     <div className="h-4 w-3/4 bg-muted animate-pulse rounded-md"></div>
@@ -73,5 +67,6 @@ export default function Loading() {
         </Card>
       </div>
     </div>
-  );
+  )
 }
+

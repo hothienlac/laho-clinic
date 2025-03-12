@@ -1,0 +1,30 @@
+{
+  "welcome": "Welcome back, {name}",
+  "overview": "Here's what's happening at your clinic today.",
+  "stats": {
+    "totalPatients": "Total Patients",
+    "appointmentsToday": "Appointments Today",
+    "inventoryItems": "Inventory Items",
+    "activity": "Activity",
+    "remaining": "{count} remaining",
+    "lowStock": "low stock alerts",
+    "fromLastMonth": "from last month",
+    "fromYesterday": "from yesterday"
+  },
+  "recentActivity": {
+    "title": "Recent Activity",
+    "description": "Your clinic's activity for the past 24 hours",
+    "patientCheckIn": "Patient check-in",
+    "prescriptionFilled": "Prescription filled",
+    "appointmentScheduled": "Appointment scheduled",
+    "inventoryUpdated": "Inventory updated",
+    "medicalRecordUpdated": "Medical record updated",
+    "timeAgo": "{count, plural, =1 {# hour} other {# hours}} ago",
+    "viewAll": "View All Activity"
+  },
+  "upcomingAppointments": {
+    "title": "Upcoming Appointments",
+    "description": "Next 3 appointments",
+    "schedule": "Schedule New Appointment"
+  }
+}

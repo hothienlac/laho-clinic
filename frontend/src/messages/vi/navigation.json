@@ -1,0 +1,9 @@
+{
+  "dashboard": "Bảng Điều Khiển",
+  "patients": "Bệnh Nhân",
+  "appointments": "Lịch Hẹn",
+  "medicalRecords": "Hồ Sơ Y Tế",
+  "inventory": "Kho Thuốc",
+  "settings": "Cài Đặt",
+  "newAppointment": "Lịch Hẹn Mới"
+}

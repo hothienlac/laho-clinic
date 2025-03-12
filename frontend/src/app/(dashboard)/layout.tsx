@@ -1,22 +1,28 @@
-import type React from 'react';
-import { UserButton } from '@clerk/nextjs';
-import { redirect } from 'next/navigation';
-import { currentUser } from '@clerk/nextjs/server';
-import { BellIcon } from 'lucide-react';
+import type React from "react"
+import { UserButton } from "@clerk/nextjs"
+import { redirect } from "next/navigation"
+import { currentUser } from "@clerk/nextjs/server"
+import { BellIcon } from "lucide-react"
+import { cookies } from "next/headers"
 
-import { Sidebar } from '@/components/Dashboard/SideBar';
-import { Button } from '@/components/ui/button';
+import { Sidebar } from "@/components/Dashboard/Sidebar"
+import { Button } from "@/components/ui/button"
+import { LanguageSwitcher } from "@/components/Dashboard/LanguageSwitcher"
 
 export default async function DashboardLayout({
   children,
 }: {
-  children: React.ReactNode;
+  children: React.ReactNode
 }) {
-  const user = await currentUser();
+  const user = await currentUser()
 
   if (!user) {
-    redirect('/sign-in');
+    redirect("/sign-in")
   }
+
+  // Get the locale from cookies
+  const cookieStore = cookies()
+  const locale = cookieStore.get("NEXT_LOCALE")?.value || "en"
 
   return (
     <div className="flex h-screen bg-muted">
@@ -24,6 +30,7 @@ export default async function DashboardLayout({
       <div className="flex flex-col flex-1 md:pl-64">
         <header className="sticky top-0 z-10 flex h-16 items-center gap-4 border-b bg-white px-4 md:px-6">
           <div className="ml-auto flex items-center gap-4">
+            <LanguageSwitcher />
             <Button variant="ghost" size="icon" className="relative">
               <BellIcon className="h-5 w-5" />
               <span className="absolute top-0 right-0 h-2 w-2 rounded-full bg-accent"></span>
@@ -37,5 +44,6 @@ export default async function DashboardLayout({
         </main>
       </div>
     </div>
-  );
+  )
 }
+
