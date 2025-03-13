@@ -2,7 +2,7 @@
 
 import type React from 'react';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import {
@@ -14,13 +14,16 @@ import {
   Menu,
   X,
   FileText,
-  PlusCircle,
+  QrCode,
+  Stethoscope,
 } from 'lucide-react';
 import { useTranslations } from 'next-intl';
+import Cookies from 'js-cookie';
 
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
-import { ClinicSelector } from '@/components/Dashboard/ClinicSelector';
+import { ClinicSelector } from './ClinicSelector';
+import type { UserRole } from './RoleSelectorDropdown';
 
 type SidebarItem = {
   titleKey: string;
@@ -65,6 +68,62 @@ export function Sidebar() {
   const t = useTranslations('navigation');
   const pathname = usePathname();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [userRole, setUserRole] = useState<UserRole>('DOCTOR');
+
+  // Get the user role from cookie when component mounts
+  useEffect(() => {
+    const roleId = Cookies.get('SELECTED_ROLE_ID');
+    if (roleId) {
+      // This is a simplified approach - in a real app, you'd fetch the role details
+      if (roleId === 'role-1') setUserRole('ADMIN');
+      else if (roleId === 'role-2') setUserRole('DOCTOR');
+      else if (roleId === 'role-3') setUserRole('PHARMACIST');
+    }
+  }, []);
+
+  // Listen for changes to the SELECTED_ROLE_ID cookie
+  useEffect(() => {
+    const handleStorageChange = () => {
+      const roleId = Cookies.get('SELECTED_ROLE_ID');
+      if (roleId) {
+        if (roleId === 'role-1') setUserRole('ADMIN');
+        else if (roleId === 'role-2') setUserRole('DOCTOR');
+        else if (roleId === 'role-3') setUserRole('PHARMACIST');
+      }
+    };
+
+    // Check for cookie changes every second
+    const interval = setInterval(handleStorageChange, 1000);
+    return () => clearInterval(interval);
+  }, []);
+
+  const renderActionButton = () => {
+    switch (userRole) {
+      case 'ADMIN':
+        // No button for admin
+        return null;
+      case 'DOCTOR':
+        return (
+          <Link href="/new-examination">
+            <Button className="w-full bg-secondary hover:bg-secondary/90 text-white gap-2">
+              <Stethoscope className="h-4 w-4" />
+              {t('newExamination')}
+            </Button>
+          </Link>
+        );
+      case 'PHARMACIST':
+        return (
+          <Link href="/scan-prescription">
+            <Button className="w-full bg-accent hover:bg-accent/90 text-white gap-2">
+              <QrCode className="h-4 w-4" />
+              {t('scanPrescription')}
+            </Button>
+          </Link>
+        );
+      default:
+        return null;
+    }
+  };
 
   return (
     <>
@@ -87,7 +146,7 @@ export function Sidebar() {
       <div className="hidden md:flex md:w-64 md:flex-col md:fixed md:inset-y-0">
         <div className="flex flex-col flex-grow bg-white border-r border-gray-200 pt-5 pb-4 overflow-y-auto">
           <div className="flex-shrink-0 px-4 mb-5">
-            {/* Replace the text with the clinic selector */}
+            {/* Clinic selector */}
             <ClinicSelector />
           </div>
           <nav className="mt-5 flex-1 px-2 space-y-1">
@@ -116,12 +175,10 @@ export function Sidebar() {
               </Link>
             ))}
           </nav>
-          <div className="px-4 mt-6">
-            <Button className="w-full bg-secondary hover:bg-secondary/90 text-white gap-2">
-              <PlusCircle className="h-4 w-4" />
-              {t('newExamination')}
-            </Button>
-          </div>
+          {/* Conditional action button based on role */}
+          {renderActionButton() && (
+            <div className="px-4 mt-6">{renderActionButton()}</div>
+          )}
         </div>
       </div>
 
@@ -146,7 +203,7 @@ export function Sidebar() {
           </div>
           <div className="flex-1 h-0 pt-5 pb-4 overflow-y-auto">
             <div className="flex-shrink-0 px-4 mb-5">
-              {/* Replace the text with the clinic selector in mobile view too */}
+              {/* Clinic selector in mobile view */}
               <ClinicSelector />
             </div>
             <nav className="mt-5 px-2 space-y-1">
@@ -176,12 +233,10 @@ export function Sidebar() {
                 </Link>
               ))}
             </nav>
-            <div className="px-4 mt-6">
-              <Button className="w-full bg-secondary hover:bg-secondary/90 text-white gap-2">
-                <PlusCircle className="h-4 w-4" />
-                {t('newExamination')}
-              </Button>
-            </div>
+            {/* Conditional action button based on role in mobile view */}
+            {renderActionButton() && (
+              <div className="px-4 mt-6">{renderActionButton()}</div>
+            )}
           </div>
         </div>
         <div className="flex-shrink-0 w-14">

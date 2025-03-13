@@ -4,9 +4,11 @@ import { redirect } from 'next/navigation';
 import { currentUser } from '@clerk/nextjs/server';
 import { BellIcon } from 'lucide-react';
 
-import { Sidebar } from '@/components/Dashboard/Sidebar';
 import { Button } from '@/components/ui/button';
-import { LanguageSwitcher } from '@/components/Dashboard/LanguageSwitcher';
+import { Sidebar } from './components/Sidebar';
+import { LanguageSwitcher } from './components/LanguageSwitcher';
+// import { RoleSelectorDropdown } from './components/RoleSelectorDropdown';
+import { MobileHeader } from './components/MobileHeader';
 
 export default async function DashboardLayout({
   children,
@@ -23,8 +25,10 @@ export default async function DashboardLayout({
     <div className="flex h-screen bg-muted">
       <Sidebar />
       <div className="flex flex-col flex-1 md:pl-64">
-        <header className="sticky top-0 z-10 flex h-16 items-center gap-4 border-b bg-white px-4 md:px-6">
-          <div className="ml-auto flex items-center gap-4">
+        <MobileHeader />
+        <header className="sticky top-0 z-10 hidden md:flex h-16 items-center gap-4 border-b bg-white px-4 md:px-6">
+          <div className="ml-auto flex items-center gap-2">
+            {/* <RoleSelectorDropdown /> */}
             <LanguageSwitcher />
             <Button variant="ghost" size="icon" className="relative">
               <BellIcon className="h-5 w-5" />
@@ -34,6 +38,7 @@ export default async function DashboardLayout({
             <UserButton afterSignOutUrl="/" />
           </div>
         </header>
+
         <main className="flex-1 overflow-y-auto p-4 md:p-6 bg-muted">
           <div className="mx-auto max-w-7xl">{children}</div>
         </main>

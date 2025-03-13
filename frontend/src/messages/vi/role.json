@@ -1,7 +1,5 @@
 {
-  "title": "Vai Trò",
-  "selectRole": "Chọn Vai Trò",
-  "switchRole": "Đổi Vai Trò",
+  "title": "Vai Trò Của Bạn",
   "admin": "Quản Trị Viên",
   "doctor": "Bác Sĩ",
   "pharmacist": "Dược Sĩ"
