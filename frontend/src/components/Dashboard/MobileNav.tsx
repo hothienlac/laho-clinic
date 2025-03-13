@@ -1,45 +1,45 @@
-"use client"
+'use client';
 
-import * as React from "react"
-import Link from "next/link"
-import { usePathname } from "next/navigation"
+import * as React from 'react';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 
-import { cn } from "@/lib/utils"
-import { Button } from "@/components/ui/button"
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
-import { Menu } from "lucide-react"
+import { cn } from '@/lib/utils';
+import { Button } from '@/components/ui/button';
+import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
+import { Menu } from 'lucide-react';
 
 export function MobileNav() {
-  const [open, setOpen] = React.useState(false)
-  const pathname = usePathname()
+  const [open, setOpen] = React.useState(false);
+  const pathname = usePathname();
 
   const routes = [
     {
-      href: "/",
-      label: "Dashboard",
-      active: pathname === "/" || pathname === "/dashboard",
+      href: '/',
+      label: 'Dashboard',
+      active: pathname === '/' || pathname === '/dashboard',
     },
     {
-      href: "/patients",
-      label: "Patients",
-      active: pathname === "/patients",
+      href: '/patients',
+      label: 'Patients',
+      active: pathname === '/patients',
     },
     {
-      href: "/appointments",
-      label: "Appointments",
-      active: pathname === "/appointments",
+      href: '/appointments',
+      label: 'Appointments',
+      active: pathname === '/appointments',
     },
     {
-      href: "/inventory",
-      label: "Inventory",
-      active: pathname === "/inventory",
+      href: '/inventory',
+      label: 'Inventory',
+      active: pathname === '/inventory',
     },
     {
-      href: "/settings",
-      label: "Settings",
-      active: pathname === "/settings",
+      href: '/settings',
+      label: 'Settings',
+      active: pathname === '/settings',
     },
-  ]
+  ];
 
   return (
     <Sheet open={open} onOpenChange={setOpen}>
@@ -51,7 +51,11 @@ export function MobileNav() {
       </SheetTrigger>
       <SheetContent side="left" className="pr-0">
         <div className="px-7">
-          <Link href="/" className="flex items-center" onClick={() => setOpen(false)}>
+          <Link
+            href="/"
+            className="flex items-center"
+            onClick={() => setOpen(false)}
+          >
             <span className="font-bold">Clinic Management System</span>
           </Link>
         </div>
@@ -62,8 +66,8 @@ export function MobileNav() {
               href={route.href}
               onClick={() => setOpen(false)}
               className={cn(
-                "px-7 py-2 text-base font-medium transition-colors hover:text-primary",
-                route.active ? "text-primary" : "text-muted-foreground",
+                'px-7 py-2 text-base font-medium transition-colors hover:text-primary',
+                route.active ? 'text-primary' : 'text-muted-foreground',
               )}
             >
               {route.label}
@@ -72,6 +76,5 @@ export function MobileNav() {
         </div>
       </SheetContent>
     </Sheet>
-  )
+  );
 }
-

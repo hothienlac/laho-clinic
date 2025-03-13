@@ -6,7 +6,7 @@ generator client {
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
-  schemas  = ["clinic", "medical_record", "messaging", "public"]
+  schemas  = ["clinic", "medical", "messaging", "public"]
 }
 
 model clinic {
@@ -98,7 +98,7 @@ model appointment {
   status         appointment_status @default(Scheduled)
   patient        patient            @relation(fields: [patient_id], references: [patient_id], onUpdate: Restrict, map: "appointment_patient_fk")
 
-  @@schema("medical_record")
+  @@schema("medical")
 }
 
 model job {
@@ -106,7 +106,7 @@ model job {
   job_name String    @db.VarChar
   patient  patient[]
 
-  @@schema("medical_record")
+  @@schema("medical")
 }
 
 model patient {
@@ -125,7 +125,7 @@ model patient {
   appointment       appointment[]
   job               job           @relation(fields: [job_id], references: [job_id], onUpdate: Restrict, map: "patient_job_fk")
 
-  @@schema("medical_record")
+  @@schema("medical")
 }
 
 enum clinic_role {
@@ -144,5 +144,5 @@ enum appointment_status {
   Cancelled
   Expired
 
-  @@schema("medical_record")
+  @@schema("medical")
 }

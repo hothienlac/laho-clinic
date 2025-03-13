@@ -5,5 +5,6 @@
   "medicalRecords": "Hồ Sơ Y Tế",
   "inventory": "Kho Thuốc",
   "settings": "Cài Đặt",
-  "newAppointment": "Lịch Hẹn Mới"
+  "newExamination": "Ca khám mới",
+  "scanPrescription": "Đơn Thuốc Mới"
 }

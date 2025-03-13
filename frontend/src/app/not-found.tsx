@@ -1,11 +1,11 @@
-"use client"
+'use client';
 
-import Link from "next/link"
-import { Button } from "@/components/ui/button"
-import { useTranslations } from "next-intl"
+import Link from 'next/link';
+import { Button } from '@/components/ui/button';
+import { useTranslations } from 'next-intl';
 
 export default function NotFound() {
-  const t = useTranslations("errors")
+  const t = useTranslations('errors');
 
   return (
     <div className="flex min-h-screen flex-col items-center justify-center p-4">
@@ -27,13 +27,12 @@ export default function NotFound() {
             <path d="M12 8h8v8h-8z" />
           </svg>
         </div>
-        <h2 className="text-2xl font-bold mb-2">{t("pageNotFound")}</h2>
-        <p className="text-muted-foreground mb-6">{t("pageNotFoundMessage")}</p>
+        <h2 className="text-2xl font-bold mb-2">{t('pageNotFound')}</h2>
+        <p className="text-muted-foreground mb-6">{t('pageNotFoundMessage')}</p>
         <Button asChild className="w-full">
-          <Link href="/">{t("returnToDashboard")}</Link>
+          <Link href="/">{t('returnToDashboard')}</Link>
         </Button>
       </div>
     </div>
-  )
+  );
 }
-

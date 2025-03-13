@@ -11,6 +11,8 @@ import { DiscordModule } from './system/discord/discord.module';
 import { HttpModule } from './system/http/http.module';
 import { UserModule } from './clinic/user/user.module';
 import { DatabaseModule } from '@system/database';
+import { ClinicModule } from './clinic/clinic/clinic.module';
+import { MedicalModule } from './clinic/medical/medical.module';
 
 @Module({
     imports: [
@@ -25,6 +27,8 @@ import { DatabaseModule } from '@system/database';
         DiscordModule,
         HttpModule,
         UserModule,
+        ClinicModule,
+        MedicalModule,
     ],
     controllers: [AppController],
 })

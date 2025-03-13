@@ -1,0 +1,9 @@
+{
+  "title": "Role",
+  "selectRole": "Select Role",
+  "switchRole": "Switch Role",
+  "admin": "Administrator",
+  "doctor": "Doctor",
+  "pharmacist": "Pharmacist"
+}
+
