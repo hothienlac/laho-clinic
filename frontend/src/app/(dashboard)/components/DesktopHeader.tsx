@@ -14,7 +14,9 @@ export default async function DesktopHeader() {
   if (!user) {
     redirect('/sign-in');
   }
-  const availableRoles = await prisma.$transaction(getUserAvailableRoles(user.id, clinicId));
+  const availableRoles = await prisma.$transaction(
+    getUserAvailableRoles(user.id, clinicId),
+  );
 
   return (
     <header className="sticky top-0 z-10 hidden md:flex h-16 items-center gap-4 border-b bg-white px-4 md:px-6">

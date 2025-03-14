@@ -1,10 +1,10 @@
 import { Prisma } from '@prisma/client';
-import { Roles } from './types/role';
+import { ClinicRoles } from './types/role';
 
-export const checkUserHaveClinic =
+export const getUserClinics =
   (userId: string) =>
   async (tx: Prisma.TransactionClient): Promise<boolean> => {
-    const clinicUser = await tx.clinic_user.findFirst({
+    const clinicUser = await tx.clinic_user.findMany({
       where: {
         user_id: userId,
       },
@@ -14,7 +14,7 @@ export const checkUserHaveClinic =
 
 export const getUserAvailableRoles =
   (userId: string, clinicId: string) =>
-  async (prisma: Prisma.TransactionClient): Promise<Roles> => {
+  async (prisma: Prisma.TransactionClient): Promise<ClinicRoles> => {
     const clinicUsers = await prisma.clinic_user.findMany({
       where: {
         user_id: userId,

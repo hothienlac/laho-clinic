@@ -11,3 +11,5 @@ export type ClinicRole = z.infer<typeof clinicRoleSchema>;
 
 export const clinicRolesSchema = clinicRoleSchema.array();
 export type ClinicRoles = z.infer<typeof clinicRolesSchema>;
+
+export const COOKIE_SELECTED_ROLE = 'Selected-Role';
