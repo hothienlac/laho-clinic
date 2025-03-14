@@ -1,0 +1,148 @@
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["multiSchema"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+  schemas  = ["clinic", "medical", "messaging", "public"]
+}
+
+model clinic {
+  clinic_id    String   @id(map: "clinic_pk") @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  clinic_name  String   @db.VarChar
+  address      String?  @db.VarChar
+  phone_number String?  @db.VarChar
+  description  String?  @db.VarChar
+  created_at   DateTime @default(now()) @db.Timestamptz(6)
+  updated_at   DateTime @default(now()) @db.Timestamptz(6)
+  metadata     Json?    @default("{}")
+
+  @@schema("clinic")
+}
+
+model clinic_user {
+  clinic_user_id String      @id(map: "clinic_user_pk") @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  clinic_id      String      @db.Uuid
+  user_id        String      @db.VarChar
+  role           clinic_role
+  created_at     DateTime    @default(now()) @db.Timestamptz(6)
+
+  @@schema("clinic")
+}
+
+model discord {
+  discord_id         String          @id(map: "discord_pk") @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  discord_channel_id String          @db.Uuid
+  username           String          @db.VarChar
+  message            String          @db.VarChar
+  created_at         DateTime        @default(now()) @db.Timestamptz(6)
+  processed_at       DateTime?       @db.Timestamptz(6)
+  error_message      String?         @db.VarChar
+  discord_channel    discord_channel @relation(fields: [discord_channel_id], references: [discord_channel_id], onUpdate: Restrict, map: "discord_discord_channel_fk")
+
+  @@schema("messaging")
+}
+
+model discord_channel {
+  discord_channel_id   String    @id(map: "discord_channel_pk") @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  discord_channel_name String    @unique(map: "discord_channel_unique") @db.VarChar
+  webhook_url          String    @db.VarChar
+  discord              discord[]
+
+  @@schema("messaging")
+}
+
+model email {
+  email_id            String         @id(map: "email_pk") @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  from_address        String         @db.VarChar
+  to_addresses        String[]       @db.VarChar
+  cc_addresses        String[]       @default([]) @db.VarChar
+  bcc_addresses       String[]       @default([]) @db.VarChar
+  attachments         Json[]         @default([])
+  reply_to_address    String         @db.VarChar
+  priority            String         @db.VarChar
+  headers             Json           @default("{}")
+  email_template_id   String         @db.Uuid
+  email_template_data Json           @default("{}")
+  schedule_send_time  DateTime       @default(now()) @db.Timestamptz(6)
+  processed_at        DateTime?      @db.Timestamptz(6)
+  error_message       String?        @db.VarChar
+  email_template      email_template @relation(fields: [email_template_id], references: [email_template_id], onUpdate: Restrict, map: "email_email_template_fk")
+
+  @@index([processed_at])
+  @@schema("messaging")
+}
+
+model email_template {
+  email_template_id String  @id(map: "email_template_pk") @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  name              String  @db.VarChar
+  subject_template  String
+  content_template  String
+  language          String  @db.VarChar
+  email             email[]
+
+  @@unique([name, language], map: "email_template_unique")
+  @@schema("messaging")
+}
+
+model appointment {
+  appointment_id String             @id(map: "appointment_pk") @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  reason         String             @db.VarChar
+  patient_id     String             @db.Uuid
+  doctor_id      String             @db.VarChar
+  scheduled_date DateTime           @db.Date
+  created_at     DateTime           @default(now()) @db.Timestamptz(6)
+  updated_at     DateTime           @default(now()) @db.Timestamptz(6)
+  status         appointment_status @default(Scheduled)
+  patient        patient            @relation(fields: [patient_id], references: [patient_id], onUpdate: Restrict, map: "appointment_patient_fk")
+
+  @@schema("medical")
+}
+
+model job {
+  job_id   Int       @id(map: "job_pk") @default(autoincrement())
+  job_name String    @db.VarChar
+  patient  patient[]
+
+  @@schema("medical")
+}
+
+model patient {
+  patient_id        String        @id(map: "patient_pk") @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  full_name         String        @db.VarChar
+  date_of_birth     DateTime      @db.Date
+  male              Boolean
+  job_id            Int
+  address           Json
+  emergency_contact Json
+  phone_number      String        @db.VarChar
+  metadata          Json          @default("{}")
+  created_at        DateTime      @default(now()) @db.Timestamptz(6)
+  updated_at        DateTime      @default(now()) @db.Timestamptz(6)
+  medical_history   String        @default("{}") @db.VarChar
+  appointment       appointment[]
+  job               job           @relation(fields: [job_id], references: [job_id], onUpdate: Restrict, map: "patient_job_fk")
+
+  @@schema("medical")
+}
+
+enum clinic_role {
+  Admin
+  Doctor
+  Pharmacist
+
+  @@schema("clinic")
+}
+
+enum appointment_status {
+  Scheduled
+  Waiting
+  InProgress
+  Completed
+  Cancelled
+  Expired
+
+  @@schema("medical")
+}

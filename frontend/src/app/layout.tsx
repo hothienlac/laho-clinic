@@ -47,7 +47,7 @@ export default async function RootLayout({
   const locale = await getLocale();
 
   return (
-    <ClerkProvider>
+    <ClerkProvider afterSignOutUrl={'/sign-in'}>
       <NextIntlClientProvider locale={locale}>
         <html lang={locale}>
           <body className={inter.className}>{children}</body>

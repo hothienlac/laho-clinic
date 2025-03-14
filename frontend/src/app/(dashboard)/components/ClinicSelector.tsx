@@ -2,7 +2,6 @@
 
 import { useState } from 'react';
 import { Check, ChevronsUpDown, Building2 } from 'lucide-react';
-import { useTranslations } from 'next-intl';
 
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
@@ -40,7 +39,6 @@ const mockClinics: Clinic[] = [
 ];
 
 export function ClinicSelector() {
-  const t = useTranslations('clinic');
   const [selectedClinic, setSelectedClinic] = useState<Clinic>(mockClinics[0]);
   const [open, setOpen] = useState(false);
 

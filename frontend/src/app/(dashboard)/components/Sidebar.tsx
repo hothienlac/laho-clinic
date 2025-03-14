@@ -2,7 +2,7 @@
 
 import type React from 'react';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import {
@@ -14,16 +14,12 @@ import {
   Menu,
   X,
   FileText,
-  QrCode,
-  Stethoscope,
 } from 'lucide-react';
 import { useTranslations } from 'next-intl';
-import Cookies from 'js-cookie';
 
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import { ClinicSelector } from './ClinicSelector';
-import type { UserRole } from './RoleSelectorDropdown';
 
 type SidebarItem = {
   titleKey: string;
@@ -64,66 +60,10 @@ const sidebarItems: SidebarItem[] = [
   },
 ];
 
-export function Sidebar() {
+export default function Sidebar() {
   const t = useTranslations('navigation');
   const pathname = usePathname();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [userRole, setUserRole] = useState<UserRole>('DOCTOR');
-
-  // Get the user role from cookie when component mounts
-  useEffect(() => {
-    const roleId = Cookies.get('SELECTED_ROLE_ID');
-    if (roleId) {
-      // This is a simplified approach - in a real app, you'd fetch the role details
-      if (roleId === 'role-1') setUserRole('ADMIN');
-      else if (roleId === 'role-2') setUserRole('DOCTOR');
-      else if (roleId === 'role-3') setUserRole('PHARMACIST');
-    }
-  }, []);
-
-  // Listen for changes to the SELECTED_ROLE_ID cookie
-  useEffect(() => {
-    const handleStorageChange = () => {
-      const roleId = Cookies.get('SELECTED_ROLE_ID');
-      if (roleId) {
-        if (roleId === 'role-1') setUserRole('ADMIN');
-        else if (roleId === 'role-2') setUserRole('DOCTOR');
-        else if (roleId === 'role-3') setUserRole('PHARMACIST');
-      }
-    };
-
-    // Check for cookie changes every second
-    const interval = setInterval(handleStorageChange, 1000);
-    return () => clearInterval(interval);
-  }, []);
-
-  const renderActionButton = () => {
-    switch (userRole) {
-      case 'ADMIN':
-        // No button for admin
-        return null;
-      case 'DOCTOR':
-        return (
-          <Link href="/new-examination">
-            <Button className="w-full bg-secondary hover:bg-secondary/90 text-white gap-2">
-              <Stethoscope className="h-4 w-4" />
-              {t('newExamination')}
-            </Button>
-          </Link>
-        );
-      case 'PHARMACIST':
-        return (
-          <Link href="/scan-prescription">
-            <Button className="w-full bg-accent hover:bg-accent/90 text-white gap-2">
-              <QrCode className="h-4 w-4" />
-              {t('scanPrescription')}
-            </Button>
-          </Link>
-        );
-      default:
-        return null;
-    }
-  };
 
   return (
     <>
@@ -175,10 +115,6 @@ export function Sidebar() {
               </Link>
             ))}
           </nav>
-          {/* Conditional action button based on role */}
-          {renderActionButton() && (
-            <div className="px-4 mt-6">{renderActionButton()}</div>
-          )}
         </div>
       </div>
 
@@ -233,10 +169,6 @@ export function Sidebar() {
                 </Link>
               ))}
             </nav>
-            {/* Conditional action button based on role in mobile view */}
-            {renderActionButton() && (
-              <div className="px-4 mt-6">{renderActionButton()}</div>
-            )}
           </div>
         </div>
         <div className="flex-shrink-0 w-14">

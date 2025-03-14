@@ -1,11 +1,7 @@
-'use client';
-
 import type React from 'react';
 
 import { useState } from 'react';
 import { Shield, Stethoscope, Pill, Check, ChevronsUpDown } from 'lucide-react';
-import { useTranslations } from 'next-intl';
-import Cookies from 'js-cookie';
 
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
@@ -15,62 +11,51 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-
-// Define role types
-export type UserRole = 'ADMIN' | 'DOCTOR' | 'PHARMACIST';
+import { ClinicRole } from '@/types/clinic';
+import { useTranslations } from 'next-intl';
 
 // Mock data for user roles
 // In a real app, this would come from an API call or user data
 type Role = {
-  id: string;
   name: string;
-  type: UserRole;
+  type: ClinicRole;
   icon: React.ElementType;
   color: string;
 };
+type Roles = Role[];
 
-const mockRoles: Role[] = [
+const mockRoles: Roles = [
   {
-    id: 'role-1',
     name: 'Administrator',
-    type: 'ADMIN',
+    type: 'Admin',
     icon: Shield,
     color: 'text-primary',
   },
   {
-    id: 'role-2',
     name: 'Doctor',
-    type: 'DOCTOR',
+    type: 'Doctor',
     icon: Stethoscope,
     color: 'text-secondary',
   },
   {
-    id: 'role-3',
     name: 'Pharmacist',
-    type: 'PHARMACIST',
+    type: 'Pharmacist',
     icon: Pill,
     color: 'text-accent',
   },
 ];
 
-export function RoleSelectorDropdown() {
+interface RoleSelectorDropdownProps {
+  role: ClinicRole;
+}
+
+export default function RoleSelectorDropdown({
+  role,
+}: RoleSelectorDropdownProps) {
   const t = useTranslations('role');
-
-  // Initialize from cookie or default to first role
-  const initialRoleId = Cookies.get('SELECTED_ROLE_ID') || mockRoles[0].id;
-  const initialRole =
-    mockRoles.find((role) => role.id === initialRoleId) || mockRoles[0];
-
-  const [selectedRole, setSelectedRole] = useState<Role>(initialRole);
   const [open, setOpen] = useState(false);
 
-  const handleRoleChange = (role: Role) => {
-    setSelectedRole(role);
-    setOpen(false);
-    // Save to cookie for persistence
-    Cookies.set('SELECTED_ROLE_ID', role.id, { expires: 365, path: '/' });
-  };
-
+  const selectedRole = mockRoles.find((r) => r.type === role) ?? mockRoles[0];
   const Icon = selectedRole.icon;
 
   return (
@@ -89,13 +74,13 @@ export function RoleSelectorDropdown() {
           const RoleIcon = role.icon;
           return (
             <DropdownMenuItem
-              key={role.id}
+              key={role.type}
               className="flex items-center gap-2 py-2"
-              onClick={() => handleRoleChange(role)}
+              // onClick={() => handleRoleChange(role)}
             >
               <RoleIcon className={cn('h-4 w-4', role.color)} />
               <span>{t(role.type.toLowerCase())}</span>
-              {selectedRole.id === role.id && (
+              {selectedRole.type === role.type && (
                 <Check className="h-4 w-4 ml-auto text-primary" />
               )}
             </DropdownMenuItem>
