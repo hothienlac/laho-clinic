@@ -4,10 +4,10 @@ export const ADMIN = 'Admin' as const;
 export const DOCTOR = 'Doctor' as const;
 export const PHARMACIST = 'Pharmacist' as const;
 
-export const roles = [ADMIN, DOCTOR, PHARMACIST] as const;
+export const clinicRoles = [ADMIN, DOCTOR, PHARMACIST] as const;
 
-export const roleSchema = z.enum(roles);
-export type Role = z.infer<typeof roleSchema>;
+export const clinicRoleSchema = z.enum(clinicRoles);
+export type ClinicRole = z.infer<typeof clinicRoleSchema>;
 
-export const rolesSchema = roleSchema.array();
-export type Roles = z.infer<typeof rolesSchema>;
+export const clinicRolesSchema = clinicRoleSchema.array();
+export type ClinicRoles = z.infer<typeof clinicRolesSchema>;

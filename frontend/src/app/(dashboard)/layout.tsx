@@ -3,7 +3,9 @@ import { redirect } from 'next/navigation';
 import { currentUser } from '@clerk/nextjs/server';
 import Sidebar from './components/Sidebar';
 import MobileHeader from './components/MobileHeader';
-import DesktopHeader from './components/DestopHeader';
+import DesktopHeader from './components/DesktopHeader';
+import { checkUserHaveClinic } from '@/services/clinic/clinic-user';
+import prisma from '@/lib/prisma';
 
 export default async function DashboardLayout({
   children,
@@ -11,9 +13,13 @@ export default async function DashboardLayout({
   children: React.ReactNode;
 }) {
   const user = await currentUser();
-
   if (!user) {
     redirect('/sign-in');
+  }
+
+  const hasClinic = await prisma.$transaction(checkUserHaveClinic(user.id));
+  if (!hasClinic) {
+    redirect('/getting-started');
   }
 
   return (

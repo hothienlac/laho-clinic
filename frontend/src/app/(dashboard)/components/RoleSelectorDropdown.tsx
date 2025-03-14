@@ -11,20 +11,17 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { ClinicRole } from '@/types/clinic';
 import { useTranslations } from 'next-intl';
+import { ClinicRole, ClinicRoles } from '@/services/clinic/types/role';
 
-// Mock data for user roles
-// In a real app, this would come from an API call or user data
-type Role = {
+type RoleInfo = {
   name: string;
   type: ClinicRole;
-  icon: React.ElementType;
+  icon: React.ComponentType<{ className: string }>;
   color: string;
 };
-type Roles = Role[];
 
-const mockRoles: Roles = [
+const allRoleInfos: RoleInfo[] = [
   {
     name: 'Administrator',
     type: 'Admin',
@@ -46,41 +43,46 @@ const mockRoles: Roles = [
 ];
 
 interface RoleSelectorDropdownProps {
-  role: ClinicRole;
+  availableRoles: ClinicRoles;
+  selectedRole: ClinicRole;
 }
 
 export default function RoleSelectorDropdown({
-  role,
+  availableRoles,
+  selectedRole,
 }: RoleSelectorDropdownProps) {
   const t = useTranslations('role');
   const [open, setOpen] = useState(false);
 
-  const selectedRole = mockRoles.find((r) => r.type === role) ?? mockRoles[0];
-  const Icon = selectedRole.icon;
+  const rolesInfos = allRoleInfos.filter((r) =>
+    availableRoles.includes(r.type),
+  );
+  const selectedRoleInfo = allRoleInfos.find((r) => r.type === selectedRole)!;
+  const Icon = selectedRoleInfo.icon;
 
   return (
     <DropdownMenu open={open} onOpenChange={setOpen}>
       <DropdownMenuTrigger asChild>
         <Button variant="ghost" size="sm" className="h-8 gap-1 px-2">
-          <Icon className={cn('h-4 w-4', selectedRole.color)} />
+          <Icon className={cn('h-4 w-4', selectedRoleInfo.color)} />
           <span className="text-sm font-medium">
-            {t(selectedRole.type.toLowerCase())}
+            {t(selectedRoleInfo.type.toLowerCase())}
           </span>
           <ChevronsUpDown className="h-4 w-4 opacity-50" />
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-[200px]">
-        {mockRoles.map((role) => {
-          const RoleIcon = role.icon;
+        {rolesInfos.map((roleInfo) => {
+          const RoleIcon = roleInfo.icon;
           return (
             <DropdownMenuItem
-              key={role.type}
+              key={roleInfo.type}
               className="flex items-center gap-2 py-2"
-              // onClick={() => handleRoleChange(role)}
+              // onClick={() => handleRoleChange(roleInfo)}
             >
-              <RoleIcon className={cn('h-4 w-4', role.color)} />
-              <span>{t(role.type.toLowerCase())}</span>
-              {selectedRole.type === role.type && (
+              <RoleIcon className={cn('h-4 w-4', roleInfo.color)} />
+              <span>{t(roleInfo.type.toLowerCase())}</span>
+              {selectedRoleInfo.type === roleInfo.type && (
                 <Check className="h-4 w-4 ml-auto text-primary" />
               )}
             </DropdownMenuItem>

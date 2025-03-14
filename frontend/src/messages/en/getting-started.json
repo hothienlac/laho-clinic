@@ -1,0 +1,23 @@
+{
+  "title": "Clinic Management System",
+  "welcome": "Welcome to the Clinic Management System",
+  "getStartedDescription": "Let's get you set up with your clinic. You can either create a new clinic or join an existing one.",
+  "createClinic": "Create a Clinic",
+  "joinClinic": "Join a Clinic",
+  "createNewClinic": "Create a New Clinic",
+  "createClinicDescription": "Set up your clinic with the following information. You'll be the administrator of this clinic.",
+  "clinicName": "Clinic Name",
+  "clinicNamePlaceholder": "Enter your clinic's name",
+  "clinicEmail": "Clinic Email (optional)",
+  "clinicEmailPlaceholder": "contact@yourclinic.com",
+  "clinicPhone": "Clinic Phone Number",
+  "clinicPhonePlaceholder": "Enter your clinic's phone number",
+  "clinicAddress": "Clinic Address",
+  "clinicAddressPlaceholder": "Enter your clinic's full address",
+  "creating": "Creating...",
+  "joinExistingClinic": "Join an Existing Clinic",
+  "joinClinicDescription": "To join an existing clinic, you need to be invited by a clinic administrator.",
+  "waitingForInvitation": "Waiting for an Invitation",
+  "invitationExplanation": "Clinic administrators can invite you via email. Once invited, you'll receive instructions on how to join the clinic.",
+  "checkEmailPrompt": "Please check your email for invitations or contact your clinic administrator."
+}
