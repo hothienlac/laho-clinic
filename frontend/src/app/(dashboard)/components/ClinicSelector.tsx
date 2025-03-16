@@ -1,9 +1,8 @@
 'use client';
 
+import { Building2, Check, ChevronsUpDown } from 'lucide-react';
 import { useState } from 'react';
-import { Check, ChevronsUpDown, Building2 } from 'lucide-react';
 
-import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
@@ -11,6 +10,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
+import { cn } from '@/lib/utils';
 
 // Mock data for clinics
 // In a real app, this would come from an API call
@@ -39,7 +39,7 @@ const mockClinics: Clinic[] = [
 ];
 
 export function ClinicSelector() {
-  const [selectedClinic, setSelectedClinic] = useState<Clinic>(mockClinics[0]);
+  const [currentClinic, setcurrentClinic] = useState<Clinic>(mockClinics[0]);
   const [open, setOpen] = useState(false);
 
   return (
@@ -52,9 +52,9 @@ export function ClinicSelector() {
           <div className="flex items-center gap-2">
             <Building2 className="h-4 w-4 text-primary" />
             <div className="flex flex-col">
-              <span className="font-medium text-sm">{selectedClinic.name}</span>
-              <span className="text-xs text-muted-foreground truncate max-w-[180px]">
-                {selectedClinic.address}
+              <span className="text-sm font-medium">{currentClinic.name}</span>
+              <span className="max-w-[180px] truncate text-xs text-muted-foreground">
+                {currentClinic.address}
               </span>
             </div>
           </div>
@@ -67,16 +67,16 @@ export function ClinicSelector() {
             key={clinic.id}
             className={cn(
               'flex flex-col items-start py-2',
-              selectedClinic.id === clinic.id && 'bg-muted',
+              currentClinic.id === clinic.id && 'bg-muted',
             )}
             onClick={() => {
-              setSelectedClinic(clinic);
+              setcurrentClinic(clinic);
               setOpen(false);
             }}
           >
             <div className="flex w-full items-center justify-between">
               <span className="font-medium">{clinic.name}</span>
-              {selectedClinic.id === clinic.id && (
+              {currentClinic.id === clinic.id && (
                 <Check className="h-4 w-4 text-primary" />
               )}
             </div>

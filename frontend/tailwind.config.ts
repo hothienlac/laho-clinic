@@ -45,7 +45,7 @@ module.exports = {
         },
         muted: {
           DEFAULT: '#F7F9FC', // Light Grey
-          foreground: '#333333',
+          foreground: '#999999',
         },
         popover: {
           DEFAULT: '#FFFFFF',

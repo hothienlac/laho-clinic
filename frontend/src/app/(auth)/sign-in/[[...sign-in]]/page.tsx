@@ -10,7 +10,7 @@ export default function SignInPage() {
   return (
     <div className="flex min-h-screen flex-col items-center justify-center bg-muted p-4">
       <div className="mb-8 text-center">
-        <h1 className="text-3xl font-bold text-primary mb-2">{appT('name')}</h1>
+        <h1 className="mb-2 text-3xl font-bold text-primary">{appT('name')}</h1>
         <p className="text-muted-foreground">{t('signInDescription')}</p>
       </div>
       <div className="w-full max-w-md">

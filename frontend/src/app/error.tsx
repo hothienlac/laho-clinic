@@ -1,8 +1,8 @@
 'use client';
 
-import { useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { useTranslations } from 'next-intl';
+import { useEffect } from 'react';
 
 export default function Error({
   error,
@@ -11,7 +11,7 @@ export default function Error({
   error: Error & { digest?: string };
   reset: () => void;
 }) {
-  const t = useTranslations('errors');
+  const t = useTranslations('error');
 
   useEffect(() => {
     // Log the error to an error reporting service
@@ -20,8 +20,8 @@ export default function Error({
 
   return (
     <div className="flex min-h-screen flex-col items-center justify-center p-4">
-      <div className="rounded-xl bg-white p-8 shadow-lg max-w-md w-full text-center">
-        <div className="h-20 w-20 rounded-full bg-destructive/10 flex items-center justify-center mx-auto mb-6">
+      <div className="w-full max-w-md rounded-xl bg-white p-8 text-center shadow-lg">
+        <div className="mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-full bg-destructive/10">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="32"
@@ -39,8 +39,8 @@ export default function Error({
             <line x1="12" y1="16" x2="12.01" y2="16" />
           </svg>
         </div>
-        <h2 className="text-2xl font-bold mb-2">{t('somethingWentWrong')}</h2>
-        <p className="text-muted-foreground mb-6">{t('errorMessage')}</p>
+        <h2 className="mb-2 text-2xl font-bold">{t('somethingWentWrong')}</h2>
+        <p className="mb-6 text-muted-foreground">{t('errorMessage')}</p>
         <Button onClick={reset} className="w-full">
           {t('tryAgain')}
         </Button>

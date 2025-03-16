@@ -1,5 +1,6 @@
 'use client';
 
+import { Button } from '@/components/ui/button';
 import {
   Card,
   CardContent,
@@ -9,13 +10,12 @@ import {
 } from '@/components/ui/card';
 import {
   Activity,
-  Users,
+  ArrowDown,
+  ArrowUp,
   Calendar,
   Package,
-  ArrowUp,
-  ArrowDown,
+  Users,
 } from 'lucide-react';
-import { Button } from '@/components/ui/button';
 import { useTranslations } from 'next-intl';
 
 export default function DashboardPage() {
@@ -37,16 +37,16 @@ export default function DashboardPage() {
             <CardTitle className="text-sm font-medium">
               {t('stats.totalPatients')}
             </CardTitle>
-            <div className="h-8 w-8 rounded-full bg-primary/10 flex items-center justify-center">
+            <div className="flex h-8 w-8 items-center justify-center rounded-full bg-primary/10">
               <Users className="h-4 w-4 text-primary" />
             </div>
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">128</div>
             <div className="flex items-center pt-1 text-xs">
-              <ArrowUp className="h-3 w-3 text-success mr-1" />
-              <span className="text-success font-medium">10%</span>
-              <span className="text-muted-foreground ml-1">
+              <ArrowUp className="mr-1 h-3 w-3 text-success" />
+              <span className="font-medium text-success">10%</span>
+              <span className="ml-1 text-muted-foreground">
                 {t('stats.fromLastMonth')}
               </span>
             </div>
@@ -58,7 +58,7 @@ export default function DashboardPage() {
             <CardTitle className="text-sm font-medium">
               {t('stats.appointmentsToday')}
             </CardTitle>
-            <div className="h-8 w-8 rounded-full bg-secondary/10 flex items-center justify-center">
+            <div className="flex h-8 w-8 items-center justify-center rounded-full bg-secondary/10">
               <Calendar className="h-4 w-4 text-secondary" />
             </div>
           </CardHeader>
@@ -77,16 +77,16 @@ export default function DashboardPage() {
             <CardTitle className="text-sm font-medium">
               {t('stats.inventoryItems')}
             </CardTitle>
-            <div className="h-8 w-8 rounded-full bg-accent/10 flex items-center justify-center">
+            <div className="flex h-8 w-8 items-center justify-center rounded-full bg-accent/10">
               <Package className="h-4 w-4 text-accent" />
             </div>
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">342</div>
             <div className="flex items-center pt-1 text-xs">
-              <ArrowDown className="h-3 w-3 text-destructive mr-1" />
-              <span className="text-destructive font-medium">12</span>
-              <span className="text-muted-foreground ml-1">
+              <ArrowDown className="mr-1 h-3 w-3 text-destructive" />
+              <span className="font-medium text-destructive">12</span>
+              <span className="ml-1 text-muted-foreground">
                 {t('stats.lowStock')}
               </span>
             </div>
@@ -98,16 +98,16 @@ export default function DashboardPage() {
             <CardTitle className="text-sm font-medium">
               {t('stats.activity')}
             </CardTitle>
-            <div className="h-8 w-8 rounded-full bg-success/10 flex items-center justify-center">
+            <div className="flex h-8 w-8 items-center justify-center rounded-full bg-success/10">
               <Activity className="h-4 w-4 text-success" />
             </div>
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">86</div>
             <div className="flex items-center pt-1 text-xs">
-              <ArrowUp className="h-3 w-3 text-success mr-1" />
-              <span className="text-success font-medium">24%</span>
-              <span className="text-muted-foreground ml-1">
+              <ArrowUp className="mr-1 h-3 w-3 text-success" />
+              <span className="font-medium text-success">24%</span>
+              <span className="ml-1 text-muted-foreground">
                 {t('stats.fromYesterday')}
               </span>
             </div>
@@ -126,10 +126,10 @@ export default function DashboardPage() {
               {[1, 2, 3, 4, 5].map((i) => (
                 <div
                   key={i}
-                  className="flex items-center gap-4 rounded-lg border p-3 hover:bg-muted/50 transition-colors"
+                  className="flex items-center gap-4 rounded-lg border p-3 transition-colors hover:bg-muted/50"
                 >
                   <div
-                    className={`h-10 w-10 rounded-full flex items-center justify-center ${
+                    className={`flex h-10 w-10 items-center justify-center rounded-full ${
                       [
                         'bg-primary/10',
                         'bg-secondary/10',
@@ -207,10 +207,10 @@ export default function DashboardPage() {
               {[1, 2, 3].map((i) => (
                 <div
                   key={i}
-                  className="flex items-center gap-4 rounded-lg border p-3 hover:bg-muted/50 transition-colors"
+                  className="flex items-center gap-4 rounded-lg border p-3 transition-colors hover:bg-muted/50"
                 >
                   <div
-                    className={`h-10 w-10 rounded-full flex items-center justify-center ${
+                    className={`flex h-10 w-10 items-center justify-center rounded-full ${
                       ['bg-primary/10', 'bg-secondary/10', 'bg-accent/10'][
                         i - 1
                       ]

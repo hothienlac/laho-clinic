@@ -38,6 +38,8 @@
     --ring: 210 90% 59%;
 
     --radius: 0.5rem;
+
+    --tw-text-opacity: 0.5;
   }
 }
 
@@ -46,7 +48,7 @@
     @apply border-border;
   }
   body {
-    @apply bg-background text-foreground font-sans;
+    @apply bg-background font-sans text-foreground;
     font-family: 'Inter', sans-serif;
   }
   h1,
@@ -76,9 +78,9 @@
     @apply transition-all duration-200 hover:shadow-md;
   }
   .btn-primary {
-    @apply bg-primary text-white rounded-lg px-4 py-2 hover:bg-primary/90 transition-colors;
+    @apply rounded-lg bg-primary px-4 py-2 text-white transition-colors hover:bg-primary/90;
   }
   .btn-secondary {
-    @apply bg-secondary text-white rounded-lg px-4 py-2 hover:bg-secondary/90 transition-colors;
+    @apply rounded-lg bg-secondary px-4 py-2 text-white transition-colors hover:bg-secondary/90;
   }
 }

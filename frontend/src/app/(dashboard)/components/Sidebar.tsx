@@ -2,23 +2,23 @@
 
 import type React from 'react';
 
-import { useState } from 'react';
-import Link from 'next/link';
-import { usePathname } from 'next/navigation';
 import {
-  LayoutDashboard,
-  Users,
   Calendar,
+  FileText,
+  LayoutDashboard,
+  Menu,
   Package,
   Settings,
-  Menu,
+  Users,
   X,
-  FileText,
 } from 'lucide-react';
 import { useTranslations } from 'next-intl';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+import { useState } from 'react';
 
-import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
+import { cn } from '@/lib/utils';
 import { ClinicSelector } from './ClinicSelector';
 
 type SidebarItem = {
@@ -71,7 +71,7 @@ export default function Sidebar() {
       <Button
         variant="ghost"
         size="icon"
-        className="md:hidden fixed top-4 left-4 z-50"
+        className="fixed left-4 top-4 z-50 md:hidden"
         onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
       >
         {isMobileMenuOpen ? (
@@ -83,19 +83,19 @@ export default function Sidebar() {
       </Button>
 
       {/* Sidebar for desktop */}
-      <div className="hidden md:flex md:w-64 md:flex-col md:fixed md:inset-y-0">
-        <div className="flex flex-col flex-grow bg-white border-r border-gray-200 pt-5 pb-4 overflow-y-auto">
-          <div className="flex-shrink-0 px-4 mb-5">
+      <div className="hidden md:fixed md:inset-y-0 md:flex md:w-64 md:flex-col">
+        <div className="flex flex-grow flex-col overflow-y-auto border-r border-gray-200 bg-white pb-4 pt-5">
+          <div className="mb-5 flex-shrink-0 px-4">
             {/* Clinic selector */}
             <ClinicSelector />
           </div>
-          <nav className="mt-5 flex-1 px-2 space-y-1">
+          <nav className="mt-5 flex-1 space-y-1 px-2">
             {sidebarItems.map((item) => (
               <Link
                 key={item.href}
                 href={item.href}
                 className={cn(
-                  'group flex items-center px-4 py-3 text-sm font-medium rounded-lg transition-colors',
+                  'group flex items-center rounded-lg px-4 py-3 text-sm font-medium transition-colors',
                   pathname === item.href ||
                     (item.href === '/' && pathname === '/dashboard')
                     ? 'bg-primary text-white'
@@ -121,12 +121,12 @@ export default function Sidebar() {
       {/* Mobile sidebar */}
       <div
         className={cn(
-          'fixed inset-0 flex z-40 md:hidden transform transition-transform duration-300 ease-in-out',
+          'fixed inset-0 z-40 flex transform transition-transform duration-300 ease-in-out md:hidden',
           isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full',
         )}
       >
-        <div className="relative flex-1 flex flex-col max-w-xs w-full bg-white">
-          <div className="absolute top-0 right-0 -mr-12 pt-2">
+        <div className="relative flex w-full max-w-xs flex-1 flex-col bg-white">
+          <div className="absolute right-0 top-0 -mr-12 pt-2">
             <Button
               variant="ghost"
               size="icon"
@@ -137,18 +137,18 @@ export default function Sidebar() {
               <span className="sr-only">Close sidebar</span>
             </Button>
           </div>
-          <div className="flex-1 h-0 pt-5 pb-4 overflow-y-auto">
-            <div className="flex-shrink-0 px-4 mb-5">
+          <div className="h-0 flex-1 overflow-y-auto pb-4 pt-5">
+            <div className="mb-5 flex-shrink-0 px-4">
               {/* Clinic selector in mobile view */}
               <ClinicSelector />
             </div>
-            <nav className="mt-5 px-2 space-y-1">
+            <nav className="mt-5 space-y-1 px-2">
               {sidebarItems.map((item) => (
                 <Link
                   key={item.href}
                   href={item.href}
                   className={cn(
-                    'group flex items-center px-4 py-3 text-sm font-medium rounded-lg transition-colors',
+                    'group flex items-center rounded-lg px-4 py-3 text-sm font-medium transition-colors',
                     pathname === item.href ||
                       (item.href === '/' && pathname === '/dashboard')
                       ? 'bg-primary text-white'
@@ -171,7 +171,7 @@ export default function Sidebar() {
             </nav>
           </div>
         </div>
-        <div className="flex-shrink-0 w-14">
+        <div className="w-14 flex-shrink-0">
           {/* Force sidebar to shrink to fit close icon */}
         </div>
       </div>
