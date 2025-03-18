@@ -7,7 +7,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { LOCALE_EN, LOCALE_VN } from '@/i18n/config';
+import { localeSwitchOptions } from '@/i18n/config';
 import Cookies from 'js-cookie';
 import { Globe } from 'lucide-react';
 import { useLocale } from 'next-intl';
@@ -19,13 +19,7 @@ export function LanguageSwitcher() {
   const [isOpen, setIsOpen] = useState(false);
   const [longLocale, setLongLocale] = useState(locale);
 
-  const languages = useMemo(
-    () => [
-      { code: LOCALE_EN, label: 'English' },
-      { code: LOCALE_VN, label: 'Vietnamese' },
-    ],
-    [],
-  );
+  const languages = useMemo(() => localeSwitchOptions, []);
 
   useEffect(() => {
     const longLocale = languages.find((lang) => lang.code === locale)?.label;

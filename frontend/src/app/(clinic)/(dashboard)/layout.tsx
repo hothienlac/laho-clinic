@@ -31,7 +31,7 @@ export default async function DashboardLayout({
     });
 
   if (!userClinics.length) {
-    redirect('/getting-started');
+    redirect('/create-clinicl');
   }
 
   return (
