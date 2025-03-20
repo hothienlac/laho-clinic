@@ -1,3 +1,4 @@
+import { LayoutProps } from '@/types';
 import { ClerkProvider } from '@clerk/nextjs';
 import { NextIntlClientProvider } from 'next-intl';
 import { getLocale } from 'next-intl/server';
@@ -13,11 +14,7 @@ export async function generateMetadata() {
   };
 }
 
-export default async function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default async function RootLayout({ children }: LayoutProps) {
   const locale = await getLocale();
 
   return (

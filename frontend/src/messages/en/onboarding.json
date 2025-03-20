@@ -1,20 +1,18 @@
 {
-    "title": "Clinic Management System",
-    "welcome": "Welcome to the Clinic Management System",
-    "getStartedDescription": "Let's get you set up with your clinic. You can either create a new clinic or join an existing one by asking admin for invitation.",
-    "createClinic": "Create a Clinic",
-    "joinClinic": "Join a Clinic",
-    "createNewClinic": "Create a New Clinic",
-    "createClinicDescription": "Set up your clinic with the following information. You'll be the administrator of this clinic.",
-    "clinicName": "Clinic Name",
-    "clinicNamePlaceholder": "Enter your clinic's name",
-    "clinicEmail": "Clinic Email (optional)",
-    "clinicEmailPlaceholder": "contact@yourclinic.com",
-    "clinicPhone": "Clinic Phone Number",
-    "clinicPhonePlaceholder": "Enter your clinic's phone number",
-    "clinicAddress": "Clinic Address",
-    "clinicAddressPlaceholder": "Enter your clinic's full address",
-    "creating": "Creating..."
-  }
-  
-  
+  "title": "Clinic Management System",
+  "welcome": "Welcome to the Clinic Management System",
+  "getStartedDescription": "Let's get you set up with your clinic. You can either create a new clinic or join an existing one by asking admin for invitation.",
+  "createClinic": "Create a Clinic",
+  "joinClinic": "Join a Clinic",
+  "createNewClinic": "Create a New Clinic",
+  "createClinicDescription": "Set up your clinic with the following information. You'll be the administrator of this clinic.",
+  "clinicName": "Clinic Name",
+  "clinicNamePlaceholder": "Enter your clinic's name",
+  "clinicEmail": "Clinic Email (optional)",
+  "clinicEmailPlaceholder": "contact@yourclinic.com",
+  "clinicPhone": "Clinic Phone Number",
+  "clinicPhonePlaceholder": "Enter your clinic's phone number",
+  "clinicAddress": "Clinic Address",
+  "clinicAddressPlaceholder": "Enter your clinic's full address",
+  "creating": "Creating..."
+}

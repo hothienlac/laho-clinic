@@ -1,9 +1,5 @@
-import type React from 'react';
+import { LayoutProps } from '@/types';
 
-export default function AuthLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function AuthLayout({ children }: LayoutProps) {
   return children;
 }

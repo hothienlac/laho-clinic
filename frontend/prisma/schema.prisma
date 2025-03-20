@@ -6,18 +6,19 @@ generator client {
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
-  schemas  = ["clinic", "medical", "messaging", "public"]
+  schemas  = ["background_job", "clinic", "medical", "messaging", "public"]
 }
 
 model clinic {
-  clinic_id    String   @id(map: "clinic_pk") @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  clinic_name  String   @db.VarChar
-  address      String?  @db.VarChar
-  phone_number String?  @db.VarChar
-  description  String?  @db.VarChar
-  created_at   DateTime @default(now()) @db.Timestamptz(6)
-  updated_at   DateTime @default(now()) @db.Timestamptz(6)
-  metadata     Json?    @default("{}")
+  clinic_id    String        @id(map: "clinic_pk") @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  clinic_name  String        @db.VarChar
+  address      String?       @db.VarChar
+  phone_number String?       @db.VarChar
+  description  String?       @db.VarChar
+  created_at   DateTime      @default(now()) @db.Timestamptz(6)
+  updated_at   DateTime      @default(now()) @db.Timestamptz(6)
+  metadata     Json?         @default("{}")
+  clinic_user  clinic_user[]
 
   @@schema("clinic")
 }
@@ -28,6 +29,7 @@ model clinic_user {
   user_id        String      @db.VarChar
   role           clinic_role
   created_at     DateTime    @default(now()) @db.Timestamptz(6)
+  clinic         clinic      @relation(fields: [clinic_id], references: [clinic_id], onUpdate: Restrict, map: "clinic_user_clinic_fk")
 
   @@unique([clinic_id, user_id, role], map: "clinic_user_unique")
   @@schema("clinic")
@@ -127,6 +129,47 @@ model patient {
   job               job           @relation(fields: [job_id], references: [job_id], onUpdate: Restrict, map: "patient_job_fk")
 
   @@schema("medical")
+}
+
+model attempt {
+  attempt_id   String    @id(map: "attempt_pk") @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  task_id      String    @db.Uuid
+  scheduled_at DateTime  @default(now()) @db.Timestamptz(6)
+  processed_at DateTime? @db.Timestamptz(6)
+  result       Json?
+  task         task      @relation(fields: [task_id], references: [task_id], onUpdate: Restrict, map: "attempt_task_fk")
+
+  @@schema("background_job")
+}
+
+model background_job_job {
+  job_id                 String   @id(map: "newtable_pk") @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  job_name               String   @unique(map: "newtable_unique") @db.VarChar
+  description            String
+  max_attempts           Int      @default(5)
+  retry_delay_second     Int      @default(60)
+  retry_exponential_base Int      @default(2)
+  is_enabled             Boolean  @default(true)
+  priority               Int      @default(1)
+  max_job_age_second     Int      @default(604800)
+  batch_size             Int      @default(10)
+  created_at             DateTime @default(now()) @db.Timestamptz(6)
+  updated_at             DateTime @default(now()) @db.Timestamptz(6)
+  task                   task[]
+
+  @@map("job")
+  @@schema("background_job")
+}
+
+model task {
+  task_id    String             @id(map: "task_pk") @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  job_id     String             @db.Uuid
+  task_data  Json
+  created_at DateTime           @default(now()) @db.Timestamptz(6)
+  attempt    attempt[]
+  job        background_job_job @relation(fields: [job_id], references: [job_id], onUpdate: Restrict, map: "task_job_fk")
+
+  @@schema("background_job")
 }
 
 enum clinic_role {

@@ -1,20 +1,18 @@
 {
-    "title": "Hệ Thống Quản Lý Phòng Khám",
-    "welcome": "Chào mừng đến với Hệ Thống Quản Lý Phòng Khám",
-    "getStartedDescription": "Hãy thiết lập phòng khám của bạn. Bạn có thể tạo một phòng khám mới hoặc tham gia vào một phòng khám đã có bằng cách nhờ quản trị viênÏ mời vào.",
-    "createClinic": "Tạo Phòng Khám",
-    "joinClinic": "Tham Gia Phòng Khám",
-    "createNewClinic": "Tạo Phòng Khám Mới",
-    "createClinicDescription": "Thiết lập phòng khám của bạn với các thông tin sau. Bạn sẽ là quản trị viên của phòng khám này.",
-    "clinicName": "Tên Phòng Khám",
-    "clinicNamePlaceholder": "Nhập tên phòng khám của bạn",
-    "clinicEmail": "Email Phòng Khám (tùy chọn)",
-    "clinicEmailPlaceholder": "lienhe@phongkham.com",
-    "clinicPhone": "Số Điện Thoại Phòng Khám",
-    "clinicPhonePlaceholder": "Nhập số điện thoại phòng khám",
-    "clinicAddress": "Địa Chỉ Phòng Khám",
-    "clinicAddressPlaceholder": "Nhập địa chỉ đầy đủ của phòng khám",
-    "creating": "Đang tạo..."
-  }
-  
-  
+  "title": "Hệ Thống Quản Lý Phòng Khám",
+  "welcome": "Chào mừng đến với Hệ Thống Quản Lý Phòng Khám",
+  "getStartedDescription": "Hãy thiết lập phòng khám của bạn. Bạn có thể tạo một phòng khám mới hoặc tham gia vào một phòng khám đã có bằng cách nhờ quản trị viênÏ mời vào.",
+  "createClinic": "Tạo Phòng Khám",
+  "joinClinic": "Tham Gia Phòng Khám",
+  "createNewClinic": "Tạo Phòng Khám Mới",
+  "createClinicDescription": "Thiết lập phòng khám của bạn với các thông tin sau. Bạn sẽ là quản trị viên của phòng khám này.",
+  "clinicName": "Tên Phòng Khám",
+  "clinicNamePlaceholder": "Nhập tên phòng khám của bạn",
+  "clinicEmail": "Email Phòng Khám (tùy chọn)",
+  "clinicEmailPlaceholder": "lienhe@phongkham.com",
+  "clinicPhone": "Số Điện Thoại Phòng Khám",
+  "clinicPhonePlaceholder": "Nhập số điện thoại phòng khám",
+  "clinicAddress": "Địa Chỉ Phòng Khám",
+  "clinicAddressPlaceholder": "Nhập địa chỉ đầy đủ của phòng khám",
+  "creating": "Đang tạo..."
+}

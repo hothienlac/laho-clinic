@@ -1,8 +1,8 @@
 import { UserButton } from '@clerk/nextjs';
 import { BellIcon } from 'lucide-react';
 
-import { Button } from '@/components/ui/button';
 import { LanguageSwitcher } from '@/components/LanguageSwitcher';
+import { Button } from '@/components/ui/button';
 import RoleSelectorDropdown from './RoleSelectorDropdown';
 
 export default async function MobileHeader() {
