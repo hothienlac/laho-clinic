@@ -1,14 +1,13 @@
 'use client';
 
-import { ClinicRole } from '@/services';
+import { Clinic, ClinicRole, ClinicRoles, Clinics } from '@/schema';
 import { useClinicStore } from '@/stores/clinic.store';
-import { clinic } from '@prisma/client';
 import { useEffect } from 'react';
 
 interface ClinicProviderProps {
-  userClinics: clinic[];
-  userRoles: ClinicRole[];
-  currentClinic: clinic | null;
+  userClinics: Clinics;
+  userRoles: ClinicRoles;
+  currentClinic: Clinic | null;
   currentRole: ClinicRole | null;
 }
 

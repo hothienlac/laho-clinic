@@ -1,15 +1,14 @@
-import { ClinicRole } from '@/services';
-import { clinic } from '@prisma/client';
+import { Clinic, Clinics, ClinicRole, ClinicRoles } from '@/schema';
 import { create } from 'zustand';
 
 interface ClinicState {
-  userClinics: clinic[];
+  userClinics: Clinics;
   userRoles: ClinicRole[];
-  currentClinic: clinic | null;
+  currentClinic: Clinic | null;
   currentRole: ClinicRole | null;
-  setUserClinics: (clinics: clinic[]) => void;
-  setUserRoles: (roles: ClinicRole[]) => void;
-  setCurrentClinic: (clinic: clinic) => void;
+  setUserClinics: (clinics: Clinics) => void;
+  setUserRoles: (roles: ClinicRoles) => void;
+  setCurrentClinic: (clinic: Clinic) => void;
   setCurrentRole: (role: ClinicRole) => void;
 }
 

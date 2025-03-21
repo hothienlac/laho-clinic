@@ -1,3 +1,4 @@
+import { APPLICATION_NAME } from '@/application-information';
 import { LanguageSwitcher } from '@/components/LanguageSwitcher';
 import { LayoutProps } from '@/types';
 import { useTranslations } from 'next-intl';
@@ -9,7 +10,7 @@ export default function CreateClinicLayout({ children }: LayoutProps) {
     <div className="flex min-h-screen flex-col bg-muted">
       <header className="border-b bg-white py-4">
         <div className="container max-w-5xl flex items-center justify-between">
-          <h1 className="text-xl font-bold text-primary">{t('title')}</h1>
+          <h1 className="text-xl font-bold text-primary">{APPLICATION_NAME}</h1>
           <LanguageSwitcher />
         </div>
       </header>

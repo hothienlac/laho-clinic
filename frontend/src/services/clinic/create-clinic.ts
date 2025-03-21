@@ -1,19 +1,16 @@
+import { CreateClinicData } from '@/schema';
 import { Prisma, clinic } from '@prisma/client';
-import { z } from 'zod';
-
-export const createClinicDataSchema = z.object({
-  clinic_name: z.string(),
-  address: z.string().nullable(),
-  phone_number: z.string().nullable(),
-  description: z.string().nullable(),
-});
-export type CreateClinicData = z.infer<typeof createClinicDataSchema>;
 
 export const createClinic =
-  (userId: string, clinicData: CreateClinicData) =>
+  (userId: string, createClinicData: CreateClinicData) =>
   async (tx: Prisma.TransactionClient): Promise<clinic> => {
     const createdClinic = await tx.clinic.create({
-      data: clinicData,
+      data: {
+        clinic_name: createClinicData.clinicName,
+        address: createClinicData.address,
+        phone_number: createClinicData.phoneNumber,
+        description: createClinicData.description,
+      },
     });
     await tx.clinic_user.create({
       data: {

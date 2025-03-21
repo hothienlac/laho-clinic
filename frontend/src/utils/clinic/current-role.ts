@@ -1,4 +1,4 @@
-import { ClinicRole, ClinicRoles } from '@/services';
+import { ClinicRole, ClinicRoles } from '@/schema';
 import { CURRENT_ROLE_COOKIE } from './cookies';
 import { setCurrentRole } from './set-current-role';
 

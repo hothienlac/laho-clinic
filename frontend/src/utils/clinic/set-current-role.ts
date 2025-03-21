@@ -1,4 +1,4 @@
-import { ClinicRole } from '@/services';
+import { ClinicRole } from '@/schema';
 import Cookies from 'js-cookie';
 import { throwNever } from '../throw-never';
 import { CURRENT_ROLE_COOKIE } from './cookies';

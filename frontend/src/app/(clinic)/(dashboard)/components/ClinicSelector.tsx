@@ -1,8 +1,5 @@
 'use client';
 
-import { Building2, Check, ChevronsUpDown } from 'lucide-react';
-import { useState } from 'react';
-
 import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
@@ -11,36 +8,20 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { cn } from '@/lib/utils';
-
-// Mock data for clinics
-// In a real app, this would come from an API call
-type Clinic = {
-  id: string;
-  name: string;
-  address: string;
-};
-
-const mockClinics: Clinic[] = [
-  {
-    id: 'clinic-1',
-    name: 'Main Street Clinic',
-    address: '123 Main St, City',
-  },
-  {
-    id: 'clinic-2',
-    name: 'Downtown Medical Center',
-    address: '456 Downtown Ave, City',
-  },
-  {
-    id: 'clinic-3',
-    name: 'Westside Health Clinic',
-    address: '789 West Blvd, City',
-  },
-];
+import { useClinicStore } from '@/stores';
+import { Building2, Check, ChevronsUpDown } from 'lucide-react';
+import { redirect } from 'next/navigation';
+import { useState } from 'react';
 
 export function ClinicSelector() {
-  const [currentClinic, setcurrentClinic] = useState<Clinic>(mockClinics[0]);
+  const { userClinics, currentClinic, setCurrentClinic } = useClinicStore();
+
   const [open, setOpen] = useState(false);
+
+  if (!currentClinic) {
+    redirect('/onboarding');
+    return null;
+  }
 
   return (
     <DropdownMenu open={open} onOpenChange={setOpen}>
@@ -52,7 +33,9 @@ export function ClinicSelector() {
           <div className="flex items-center gap-2">
             <Building2 className="h-4 w-4 text-primary" />
             <div className="flex flex-col">
-              <span className="text-sm font-medium">{currentClinic.name}</span>
+              <span className="text-sm font-medium">
+                {currentClinic.clinicName}
+              </span>
               <span className="max-w-[180px] truncate text-xs text-muted-foreground">
                 {currentClinic.address}
               </span>
@@ -62,21 +45,21 @@ export function ClinicSelector() {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="start" className="w-[250px]">
-        {mockClinics.map((clinic) => (
+        {userClinics.map((clinic) => (
           <DropdownMenuItem
-            key={clinic.id}
+            key={clinic.clinic_id}
             className={cn(
               'flex flex-col items-start py-2',
-              currentClinic.id === clinic.id && 'bg-muted',
+              currentClinic.clinic_id === clinic.clinic_id && 'bg-muted',
             )}
             onClick={() => {
-              setcurrentClinic(clinic);
+              setCurrentClinic(clinic);
               setOpen(false);
             }}
           >
             <div className="flex w-full items-center justify-between">
-              <span className="font-medium">{clinic.name}</span>
-              {currentClinic.id === clinic.id && (
+              <span className="font-medium">{clinic.clinicName}</span>
+              {currentClinic.clinic_id === clinic.clinic_id && (
                 <Check className="h-4 w-4 text-primary" />
               )}
             </div>

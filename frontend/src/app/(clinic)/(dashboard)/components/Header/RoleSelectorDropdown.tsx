@@ -8,7 +8,7 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { cn } from '@/lib/utils';
-import { ClinicRole } from '@/services';
+import { ClinicRole } from '@/schema';
 import { useClinicStore } from '@/stores';
 import { setCurrentRole } from '@/utils';
 import { Check, ChevronsUpDown, Pill, Shield, Stethoscope } from 'lucide-react';

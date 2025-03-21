@@ -17,15 +17,15 @@ export default async function ClinicLayout({ children }: LayoutProps) {
       const userClinics = await getUserClinics(user.id)(tx);
       const currentClinic = await getCurrentClinic(userClinics);
       const userRoles = currentClinic
-        ? await getUserClinicRoles(user.id, currentClinic.clinic_id)(tx)
+        ? await getUserClinicRoles(user.id, currentClinic.clinicId)(tx)
         : [];
       const currentRole = await getCurrentRole(userRoles);
       return [userClinics, userRoles, currentClinic, currentRole];
     });
 
-  if (!userClinics.length) {
-    redirect('/onboarding');
-  }
+  // if (!userClinics.length ) {
+  //   redirect('/onboarding');
+  // }
 
   return (
     <>

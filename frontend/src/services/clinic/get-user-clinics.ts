@@ -1,8 +1,10 @@
-import { Prisma, clinic } from '@prisma/client';
+import { Prisma } from '@prisma/client';
+import {  mapPrismaToClinics } from './mapper';
+import { Clinics } from '@/schema';
 
 export const getUserClinics =
   (userId: string) =>
-  async (tx: Prisma.TransactionClient): Promise<clinic[]> => {
+  async (tx: Prisma.TransactionClient): Promise<Clinics> => {
     // Select from clinic table, join with clinic_user table
     const clinicUsers = await tx.clinic_user.findMany({
       where: {
@@ -22,5 +24,5 @@ export const getUserClinics =
         },
       },
     });
-    return clinics;
+    return mapPrismaToClinics(clinics);
   };
